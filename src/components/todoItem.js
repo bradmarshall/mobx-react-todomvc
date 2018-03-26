@@ -12,12 +12,43 @@ export default class TodoItem extends React.Component {
 
 	render() {
 		const {viewStore, todo} = this.props;
+
+		const styles = {
+			listItem: {
+				backgroundColor: '#fff'
+			},
+			tagPanelLauncher: {
+				color: '#af2f2f8a',
+				marginLeft: '60px',
+				marginRight: '10px',
+				fontSize: '.5em',
+				transform: 'translateY(-17px)',
+				cursor: 'pointer'
+			},
+			tagList: {
+				display: 'inline-block',
+				transform: 'translateY(-16px)',
+				margin: '0',
+				padding: '0'
+			},
+			tagListItem: {
+				display: 'inline',
+				backgroundColor: '#e8e8e8',
+				color: '#7b7b7b',
+				fontSize: '.5em',
+				fontWeight: '500',
+				padding: '2px 5px',
+				marginRight: '4px',
+				borderRadius: '4px'
+			}
+        };
+
 		return (
 			<li className={[
 				todo.completed ? "completed": "",
 				expr(() => todo === viewStore.todoBeingEdited ? "editing" : "")
-			].join(" ")}>
-				<div className="view">
+			].join(" ")} style={styles.listItem}>
+				<div className="view" style={styles.listItem}>
 					<input
 						className="toggle"
 						type="checkbox"
@@ -27,6 +58,10 @@ export default class TodoItem extends React.Component {
 					<label onDoubleClick={this.handleEdit}>
 						{todo.title}
 					</label>
+					<button className="tagPanelLauncher" style={styles.tagPanelLauncher} onClick={this.handleAddTag}>Add Tag</button>
+					<ul className="tagList" style={styles.tagList}>
+						{this.getTags().map((tag) => <li key={tag.id} style={styles.tagListItem}>{tag.value}</li>)}
+					</ul>
 					<button className="destroy" onClick={this.handleDestroy} />
 				</div>
 				<input
@@ -78,6 +113,15 @@ export default class TodoItem extends React.Component {
 
 	handleToggle = () => {
 		this.props.todo.toggle();
+	};
+
+	handleAddTag = () => {
+		this.props.viewStore.todoBeingTagged = this.props.todo;
+		this.props.viewStore.tagPanelOpen = !this.props.viewStore.tagPanelOpen;
+	};
+
+	getTags = () => {
+		return this.props.todo.tags;
 	};
 }
 

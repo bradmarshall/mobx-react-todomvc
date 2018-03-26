@@ -9,6 +9,12 @@ import TodoItem from './todoItem';
 export default class TodoOverview extends React.Component {
 	render() {
 		const {todoStore, viewStore} = this.props;
+		const styles = {
+			todoItem: {
+				backgroundColor: '#fff'
+			}
+		}
+
 		if (todoStore.todos.length === 0)
 			return null;
 		return <section className="main">

@@ -5,6 +5,7 @@ import {observer} from 'mobx-react';
 import TodoEntry from './todoEntry';
 import TodoOverview from './todoOverview';
 import TodoFooter from './todoFooter';
+import TodoTagPicker from './todoTagPicker';
 import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS } from '../constants';
 
 import DevTool from 'mobx-react-devtools';
@@ -13,6 +14,7 @@ import DevTool from 'mobx-react-devtools';
 export default class TodoApp extends React.Component {
 	render() {
 		const {todoStore, viewStore} = this.props;
+
 		return (
 			<div>
 				<DevTool />
@@ -22,6 +24,7 @@ export default class TodoApp extends React.Component {
 				</header>
 				<TodoOverview todoStore={todoStore} viewStore={viewStore} />
 				<TodoFooter todoStore={todoStore} viewStore={viewStore} />
+				<TodoTagPicker className="tagPickerPanel" todoStore={todoStore} viewStore={viewStore} isOpen={viewStore.tagPanelOpen} />
 			</div>
 		);
 	}
